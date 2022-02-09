@@ -1,0 +1,30 @@
+{
+    "name": "dzorogh/excel-data-update",
+    "description": "A Laravel Nova card.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "maatwebsite/excel": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dzorogh\\ExcelDataUpdate\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dzorogh\\ExcelDataUpdate\\CardServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
