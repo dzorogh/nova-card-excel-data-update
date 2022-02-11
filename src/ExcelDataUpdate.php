@@ -4,15 +4,13 @@ namespace Dzorogh\ExcelDataUpdate;
 
 use Illuminate\Support\Facades\App;
 use Laravel\Nova\Card;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ToCollection;
 
 //use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ExcelDataUpdate extends Card
 {
 
-    public function __construct(FromCollection $export, ToCollection $import)
+    public function __construct($export, $import)
     {
         parent::__construct($this->component());
 

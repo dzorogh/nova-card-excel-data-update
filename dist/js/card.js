@@ -299,6 +299,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['card'],
@@ -306,7 +312,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   data: function data() {
     return {
       files: null,
-      uploading: false
+      uploading: false,
+      downloading: false
     };
   },
 
@@ -323,14 +330,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                this.downloading = true;
+
+                _context.next = 3;
                 return Nova.request().get('/nova-vendor/excel-data-update/download', {
                   params: {},
                   responseType: 'blob' // important
                 });
 
-              case 2:
+              case 3:
                 response = _context.sent;
+
+
+                this.downloading = false;
+
                 url = window.URL.createObjectURL(new Blob([response.data]));
                 link = document.createElement('a');
 
@@ -343,7 +356,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 link.click();
                 link.remove();
 
-              case 10:
+              case 12:
               case 'end':
                 return _context.stop();
             }
@@ -389,7 +402,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     'Content-Type': 'multipart/form-data'
                   }
                 }).then(function () {
-                  Nova.success('Данные обновлены!');
+                  Nova.success('Файл загружен, начата обработка');
                 }).catch(function () {
                   Nova.error('Ошибка при загрузке данных');
                 });
@@ -453,7 +466,23 @@ var render = function() {
                   }
                 }
               },
-              [_c("span", [_vm._v(_vm._s(_vm.__("Скачать текущие данные")))])]
+              [
+                _vm.downloading
+                  ? _c("span", [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.__("Подготовка и скачивание...")) +
+                          "\n        "
+                      )
+                    ])
+                  : _c("span", [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.__("Скачать текущие данные")) +
+                          "\n        "
+                      )
+                    ])
+              ]
             )
           ]
         ),
@@ -495,16 +524,14 @@ var render = function() {
                     ? _c("span", [
                         _vm._v(
                           "\n            " +
-                            _vm._s(_vm.__("Uploading")) +
-                            " (" +
-                            _vm._s(_vm.uploadProgress) +
-                            "%)\n          "
+                            _vm._s(_vm.__("Загрузка...")) +
+                            "\n          "
                         )
                       ])
                     : _c("span", [
                         _vm._v(
                           "\n            " +
-                            _vm._s(_vm.__("Загрузить обновленные данные")) +
+                            _vm._s(_vm.__("Загрузить новые данные")) +
                             "\n          "
                         )
                       ])

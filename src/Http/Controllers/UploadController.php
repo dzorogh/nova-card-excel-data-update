@@ -10,8 +10,7 @@ class UploadController
 {
     public function __invoke(ImportHandler $importHandler)
     {
-        Excel::import($importHandler->getImport(), request()->file('file'));
-
-        return '1';
+        $import = $importHandler->getImport();
+        Excel::import($import, request()->file('file'));
     }
 }

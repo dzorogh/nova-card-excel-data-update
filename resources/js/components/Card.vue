@@ -14,7 +14,13 @@
           class="btn btn-default btn-primary select-none"
           @click.prevent="downloadFile"
         >
-          <span>{{ __('Скачать текущие данные') }}</span>
+          <span v-if="downloading">
+            {{ __('Подготовка и скачивание...') }}
+          </span>
+  
+          <span v-else>
+            {{ __('Скачать текущие данные') }}
+          </span>
         </button>
       </div>
       <div class="flex-1 text-center flex-col items-center justify-center">
@@ -37,11 +43,11 @@
             class="form-file-btn btn btn-default btn-primary select-none"
           >
             <span v-if="uploading">
-              {{ __('Uploading') }} ({{ uploadProgress }}%)
+              {{ __('Загрузка...') }}
             </span>
             
             <span v-else>
-              {{ __('Загрузить обновленные данные') }}
+              {{ __('Загрузить новые данные') }}
             </span>
           </label>
         </span>
@@ -66,6 +72,7 @@ export default {
     return {
       files:     null,
       uploading: false,
+      downloading: false,
     };
   },
   
@@ -75,6 +82,8 @@ export default {
   
   methods: {
     async downloadFile() {
+      this.downloading = true;
+      
       const response = await Nova.request()
         .get(
           '/nova-vendor/excel-data-update/download',
@@ -83,6 +92,8 @@ export default {
             responseType: 'blob', // important
           },
         );
+  
+      this.downloading = false;
       
       const url  = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -125,7 +136,7 @@ export default {
           },
         )
         .then(function () {
-          Nova.success('Данные обновлены!');
+          Nova.success('Файл загружен, начата обработка');
         })
         .catch(function () {
           Nova.error('Ошибка при загрузке данных');
