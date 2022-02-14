@@ -1,6 +1,6 @@
 {
     "name": "dzorogh/excel-data-update",
-    "description": "A Laravel Nova card.",
+    "description": "A universal Laravel Nova card to update data with Excel file.",
     "keywords": [
         "laravel",
         "nova"
